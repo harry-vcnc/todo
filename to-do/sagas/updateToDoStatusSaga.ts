@@ -1,20 +1,6 @@
-import { TODO_API_URL } from '@root/constants/urls';
-import axios from 'axios';
-import { call, fork, put, take, takeLeading } from 'typed-redux-saga';
+import { fork, put, take, takeLeading } from 'typed-redux-saga';
 import { RequestUpdateToDoStatusAction, todoActions } from '../slice';
-
-export function* fetchUpdateToDo(action: RequestUpdateToDoStatusAction) {
-  try {
-    const response = yield* call(() =>
-      axios.patch(`${TODO_API_URL}/${action.payload.id}/status`, {
-        status: action.payload.status,
-      }),
-    );
-    yield* put(todoActions.successUpdateToDoStatusApi(response.data));
-  } catch (error) {
-    yield* put(todoActions.failureUpdateToDoStatusApi());
-  }
-}
+import { fetchUpdateToDo } from './apis';
 
 export function* updateToDoStatusSaga(action: RequestUpdateToDoStatusAction) {
   yield* fork(fetchUpdateToDo, action);

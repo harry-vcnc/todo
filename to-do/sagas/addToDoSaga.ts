@@ -1,21 +1,6 @@
 import { RequestAddToDoAction, todoActions } from '@root/to-do/slice';
-import { call, fork, put, take, takeLeading } from 'typed-redux-saga';
-import axios from 'axios';
-import { TODO_API_URL } from '@root/constants/urls';
-
-function* fetchAddToDo(action: RequestAddToDoAction) {
-  try {
-    const response = yield* call(() =>
-      axios.post(TODO_API_URL, {
-        title: action.payload.title,
-        description: action.payload.description,
-      }),
-    );
-    yield* put(todoActions.successAddToDoApi(response.data));
-  } catch (error) {
-    yield* put(todoActions.failureAddToDoApi());
-  }
-}
+import { fork, put, take, takeLeading } from 'typed-redux-saga';
+import { fetchAddToDo } from './apis';
 
 export function* addToDoSaga(action: RequestAddToDoAction) {
   // 큰 타입 action으로 넘겨주면, 이 사가에서 호출되는
