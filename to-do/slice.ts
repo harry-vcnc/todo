@@ -16,7 +16,7 @@ export type RequestAddToDoAction = PayloadAction<A>;
 export type RequestUpdateToDoStatusAction = PayloadAction<
   Pick<ToDoItem, 'id' | 'status'>
 >;
-type DeleteToDoAction = PayloadAction<ToDoItem & Pick<ToDoItem, 'id'>>;
+export type RequestDeleteToDoAction = PayloadAction<Pick<ToDoItem, 'id'>>;
 
 const toDoSlice = createSlice({
   name: 'toDos',
@@ -44,10 +44,7 @@ const toDoSlice = createSlice({
       state,
       action: RequestUpdateToDoStatusAction,
     ) => {},
-    successUpdateToDoStatusApi: (
-      state,
-      action: RequestUpdateToDoStatusAction,
-    ) => {},
+    successUpdateToDoStatusApi: (state, action: PayloadAction<ToDoItem>) => {},
     failureUpdateToDoStatusApi: () => {},
     requestUpdateToDoStatus: (
       state,
@@ -60,6 +57,18 @@ const toDoSlice = createSlice({
       }
     },
     failureUpdateToDoStatus: () => {},
+
+    requestDeleteToDoApi: (state, action: RequestDeleteToDoAction) => {},
+    successDeleteToDoApi: (state, action: PayloadAction<ToDoItem>) => {},
+    failureDeleteToDoApi: () => {},
+    requestDeleteToDo: (state, action: RequestDeleteToDoAction) => {},
+    successDeleteToDo: (state, action: PayloadAction<ToDoItem[]>) => {
+      // const result = state.items.filter(
+      //   (item) => item.id !== action.payload.id,
+      // );
+      state.items = action.payload;
+    },
+    failureDeleteToDo: () => {},
   },
 });
 

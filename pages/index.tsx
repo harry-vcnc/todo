@@ -50,7 +50,13 @@ export default function Home() {
               <button onClick={() => dispatchUpdateStatus(toDo.id, 'DONE')}>
                 Done
               </button>{' '}
-              <button>X</button>
+              <button
+                onClick={() =>
+                  dispatch(todoActions.requestDeleteToDo({ id: toDo.id }))
+                }
+              >
+                X
+              </button>
             </div>
           </div>
         ))}
