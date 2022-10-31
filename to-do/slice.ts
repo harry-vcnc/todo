@@ -22,24 +22,33 @@ const toDoSlice = createSlice({
   name: 'toDos',
   initialState,
   reducers: {
+    requestGetToDoApi: () => {},
+    successGetToDoApi: (state, action: PayloadAction<ToDoItem[]>) => {},
+    failureGetToDoApi: () => {},
     requestGetToDo: () => {},
     successGetToDo: (state, action: PayloadAction<ToDoItem[]>) => {
       state.items = action.payload;
     },
     failureGetToDo: () => {},
-    requestGetToDoApi: () => {},
-    successGetToDoApi: (state, action: PayloadAction<ToDoItem[]>) => {},
-    failureGetToDoApi: () => {},
 
+    requestAddToDoApi: (state, action: RequestAddToDoAction) => {},
+    successAddToDoApi: (state, action: PayloadAction<ToDoItem>) => {},
+    failureAddToDoApi: () => {},
     requestAddToDo: (state, action: RequestAddToDoAction) => {},
     successAddToDo: (state, action: PayloadAction<ToDoItem>) => {
       state.items.push(action.payload);
     },
     failureAddToDo: () => {},
-    requestAddToDoApi: (state, action: RequestAddToDoAction) => {},
-    successAddToDoApi: (state, action: PayloadAction<ToDoItem>) => {},
-    failureAddToDoApi: () => {},
 
+    requestUpdateToDoStatusApi: (
+      state,
+      action: RequestUpdateToDoStatusAction,
+    ) => {},
+    successUpdateToDoStatusApi: (
+      state,
+      action: RequestUpdateToDoStatusAction,
+    ) => {},
+    failureUpdateToDoStatusApi: () => {},
     requestUpdateToDoStatus: (
       state,
       action: RequestUpdateToDoStatusAction,
@@ -51,15 +60,6 @@ const toDoSlice = createSlice({
       }
     },
     failureUpdateToDoStatus: () => {},
-    requestUpdateToDoStatusApi: (
-      state,
-      action: RequestUpdateToDoStatusAction,
-    ) => {},
-    successUpdateToDoStatusApi: (
-      state,
-      action: RequestUpdateToDoStatusAction,
-    ) => {},
-    failureUpdateToDoStatusApi: () => {},
   },
 });
 
