@@ -11,8 +11,8 @@ const initialState: ToDoState = {
   items: [],
 };
 
-type A = Pick<ToDoItem, 'title' | 'description'>;
-export type RequestAddToDoAction = PayloadAction<A>;
+type ToDoContent = Pick<ToDoItem, 'title' | 'description'>;
+export type RequestAddToDoAction = PayloadAction<ToDoContent>;
 export type RequestUpdateToDoStatusAction = PayloadAction<
   Pick<ToDoItem, 'id' | 'status'>
 >;
