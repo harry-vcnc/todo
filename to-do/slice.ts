@@ -1,18 +1,21 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { RootState } from '@root/pages/store';
 import { ToDoItem } from '@root/to-do/types';
+import { useSelector } from 'react-redux';
 
 interface ToDoState {
-  toDos: ToDoItem[];
+  items: ToDoItem[];
 }
 
 const initialState: ToDoState = {
-  toDos: [],
+  items: [],
 };
 
-export type RequestAddToDoAction = PayloadAction<
-  Pick<ToDoItem, 'title' | 'description'>
+type A = Pick<ToDoItem, 'title' | 'description'>;
+export type RequestAddToDoAction = PayloadAction<A>;
+export type RequestUpdateToDoStatusAction = PayloadAction<
+  Pick<ToDoItem, 'id' | 'status'>
 >;
-type ToggleProgressAction = PayloadAction<Pick<ToDoItem, 'id'>>;
 type DeleteToDoAction = PayloadAction<ToDoItem & Pick<ToDoItem, 'id'>>;
 
 const toDoSlice = createSlice({
@@ -20,30 +23,43 @@ const toDoSlice = createSlice({
   initialState,
   reducers: {
     requestGetToDo: () => {},
-    successGetToDo: () => {},
+    successGetToDo: (state, action: PayloadAction<ToDoItem[]>) => {
+      state.items = action.payload;
+    },
     failureGetToDo: () => {},
     requestGetToDoApi: () => {},
-    successGetToDoApi: (state, action: PayloadAction<ToDoItem[]>) => {
-      state.toDos = action.payload;
-    },
+    successGetToDoApi: (state, action: PayloadAction<ToDoItem[]>) => {},
     failureGetToDoApi: () => {},
 
     requestAddToDo: (state, action: RequestAddToDoAction) => {},
-    successAddToDo: () => {},
+    successAddToDo: (state, action: PayloadAction<ToDoItem>) => {
+      state.items.push(action.payload);
+    },
     failureAddToDo: () => {},
     requestAddToDoApi: (state, action: RequestAddToDoAction) => {},
-    successAddToDoApi: (state, action: PayloadAction<ToDoItem>) => {
-      state.toDos.push(action.payload);
-    },
+    successAddToDoApi: (state, action: PayloadAction<ToDoItem>) => {},
     failureAddToDoApi: () => {},
 
-    toggleProgress: (state, action: ToggleProgressAction) => {
-      const toDo = state.toDos.find((toDo) => action.payload.id === toDo.id);
-      if (toDo) {
-        // toDo.inProgess = !toDo.inProgess;
+    requestUpdateToDoStatus: (
+      state,
+      action: RequestUpdateToDoStatusAction,
+    ) => {},
+    successUpdateToDoStatus: (state, action: PayloadAction<ToDoItem>) => {
+      const item = state.items.find((item) => item.id === action.payload.id);
+      if (item) {
+        item.status = action.payload.status;
       }
     },
-    deleteToDoApi: (state, action: DeleteToDoAction) => {},
+    failureUpdateToDoStatus: () => {},
+    requestUpdateToDoStatusApi: (
+      state,
+      action: RequestUpdateToDoStatusAction,
+    ) => {},
+    successUpdateToDoStatusApi: (
+      state,
+      action: RequestUpdateToDoStatusAction,
+    ) => {},
+    failureUpdateToDoStatusApi: () => {},
   },
 });
 

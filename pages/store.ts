@@ -6,7 +6,7 @@ import { toDoReducer } from '@root/to-do/slice';
 const sagaMiddleware = createSagaMiddleware();
 export const store = configureStore({
   middleware: [sagaMiddleware],
-  reducer: { toDoReducer },
+  reducer: { toDo: toDoReducer },
 });
 sagaMiddleware.run(rootSaga);
 

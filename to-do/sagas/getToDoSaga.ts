@@ -14,13 +14,17 @@ function* fetchGetToDoApi() {
 
 export function* getToDoSaga() {
   yield* fork(fetchGetToDoApi);
-  const actions = yield* take([
+  const result = yield* take([
     todoActions.successGetToDoApi,
     todoActions.failureGetToDoApi,
   ]);
-  if (actions === todoActions.successGetToDoApi.type) {
-    yield* put(todoActions.successGetToDo());
+
+  if (result === todoActions.failureGetToDoApi.type) {
+    yield* put(todoActions.failureGetToDo());
+    return;
   }
+
+  yield* put(todoActions.successGetToDo(result.payload));
 }
 
 export const getToDoWatcher = takeLeading(

@@ -3,13 +3,21 @@ import styles from '../styles/Home.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { todoActions } from '@root/to-do/slice';
 import { RootState } from './store';
-import { ToDoItem } from '@root/to-do/types';
+import { ToDoItem, ToDoStatus } from '@root/to-do/types';
 import { useEffect } from 'react';
 import ToDoForm from '@root/to-do/components/ToDoForm';
 
 export default function Home() {
   const dispatch = useDispatch();
-  const toDos = useSelector((state: RootState) => state.toDoReducer.toDos);
+  const toDos = useSelector((state: RootState) => state.toDo.items);
+
+  const dispatchUpdateStatus = (id: string, status: ToDoStatus) =>
+    dispatch(
+      todoActions.requestUpdateToDoStatus({
+        id,
+        status,
+      }),
+    );
 
   useEffect(() => {
     dispatch(todoActions.requestGetToDo());
@@ -27,15 +35,22 @@ export default function Home() {
         <ToDoForm />
         {toDos.map((toDo: ToDoItem) => (
           <div className={styles.card} key={toDo.id}>
+            <span>{toDo.title}</span>
+            <span>{toDo.description}</span>
+            <span>{toDo.status}</span>
             <div>
-              <span>{toDo.title}</span>
-              <span>{toDo.description}</span>
-              <span>{toDo.status}</span>
-            </div>
-            <div>
-              <button>Open</button>
-              <button>In Progress</button>
-              <button>Done</button> <button>X</button>
+              <button onClick={() => dispatchUpdateStatus(toDo.id, 'OPEN')}>
+                Open
+              </button>
+              <button
+                onClick={() => dispatchUpdateStatus(toDo.id, 'IN_PROGRESS')}
+              >
+                In Progress
+              </button>
+              <button onClick={() => dispatchUpdateStatus(toDo.id, 'DONE')}>
+                Done
+              </button>{' '}
+              <button>X</button>
             </div>
           </div>
         ))}

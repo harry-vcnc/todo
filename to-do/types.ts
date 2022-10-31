@@ -1,4 +1,4 @@
-type ToDoStatus = 'OPEN' | 'IN_PROGRESS' | 'DONE';
+export type ToDoStatus = 'OPEN' | 'IN_PROGRESS' | 'DONE';
 
 export interface ToDoItem {
   id: string;
