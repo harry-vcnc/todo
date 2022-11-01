@@ -1,23 +1,26 @@
 import Head from 'next/head';
 import styles from '../styles/Home.module.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { todoActions } from '@root/to-do/slice';
+import { selectFilteredToDos, todoActions } from '@root/to-do/slice';
 import { RootState } from './store';
 import { ToDoItem, ToDoStatus } from '@root/to-do/types';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import ToDoForm from '@root/to-do/components/ToDoForm';
+
+// selector -> 스토어 전체 변화를 바라보는 것을 최적화
+// createSelector() 의 selector 함수로 주어지는 스코프로 범위가 줄어든다
+// 인자로 여러개를 넘기면
+// useEffect 등의 dep array [items, statusFilter]처럼 동작하는가?
 
 export default function Home() {
   const dispatch = useDispatch();
-  const toDos = useSelector((state: RootState) => state.toDo.items);
+  const [statusFilter, setStatusFilter] = useState<ToDoStatus>('OPEN');
+  const filteredToDos = useSelector((state: RootState) =>
+    selectFilteredToDos(state, statusFilter),
+  );
 
-  const dispatchUpdateStatus = (id: string, status: ToDoStatus) =>
-    dispatch(
-      todoActions.requestUpdateToDoStatus({
-        id,
-        status,
-      }),
-    );
+  const dispatchUpdateStatus = (props: Pick<ToDoItem, 'id' | 'status'>) =>
+    dispatch(todoActions.requestUpdateToDoStatus(props));
 
   useEffect(() => {
     dispatch(todoActions.requestGetToDo());
@@ -33,21 +36,40 @@ export default function Home() {
       <main className={styles.main}>
         <h1 className={styles.title}>To-Do List</h1>
         <ToDoForm />
-        {toDos.map((toDo: ToDoItem) => (
+        <select
+          onChange={(event) =>
+            setStatusFilter(event.target.value as ToDoStatus)
+          }
+        >
+          <option value="OPEN">OPEN</option>
+          <option value="IN_PROGRESS">IN_PROGRESS</option>
+          <option value="DONE">DONE</option>
+        </select>
+        {filteredToDos.map((toDo: ToDoItem) => (
           <div className={styles.card} key={toDo.id}>
             <span>{toDo.title}</span>
             <span>{toDo.description}</span>
             <span>{toDo.status}</span>
             <div>
-              <button onClick={() => dispatchUpdateStatus(toDo.id, 'OPEN')}>
+              <button
+                onClick={() =>
+                  dispatchUpdateStatus({ id: toDo.id, status: 'OPEN' })
+                }
+              >
                 Open
               </button>
               <button
-                onClick={() => dispatchUpdateStatus(toDo.id, 'IN_PROGRESS')}
+                onClick={() =>
+                  dispatchUpdateStatus({ id: toDo.id, status: 'IN_PROGRESS' })
+                }
               >
                 In Progress
               </button>
-              <button onClick={() => dispatchUpdateStatus(toDo.id, 'DONE')}>
+              <button
+                onClick={() =>
+                  dispatchUpdateStatus({ id: toDo.id, status: 'DONE' })
+                }
+              >
                 Done
               </button>{' '}
               <button

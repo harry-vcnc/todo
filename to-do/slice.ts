@@ -1,6 +1,6 @@
 import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '@root/pages/store';
-import { ToDoItem } from '@root/to-do/types';
+import { ToDoItem, ToDoStatus } from '@root/to-do/types';
 import { useSelector } from 'react-redux';
 
 interface ToDoState {
@@ -13,7 +13,8 @@ const initialState: ToDoState = {
 
 type ToDoContent = Pick<ToDoItem, 'title' | 'description'>;
 export type RequestAddToDoAction = PayloadAction<ToDoContent>;
-export type RequestUpdateToDoStatusAction = PayloadAction<
+// export type RequestUpdateToDoStatusAction = PayloadAction<
+export type SSSPayloadActionType = PayloadAction<
   Pick<ToDoItem, 'id' | 'status'>
 >;
 export type RequestDeleteToDoAction = PayloadAction<Pick<ToDoItem, 'id'>>;
@@ -23,11 +24,13 @@ const toDoSlice = createSlice({
   initialState,
   reducers: {
     requestGetToDoApi: () => {},
-    successGetToDoApi: (state, action: PayloadAction<ToDoItem[]>) => {},
+    successGetToDoApi: (state, action: PayloadAction<ToDoItem[]>) => {
+      state.items = action.payload;
+    },
     failureGetToDoApi: () => {},
     requestGetToDo: () => {},
     successGetToDo: (state, action: PayloadAction<ToDoItem[]>) => {
-      state.items = action.payload;
+      // state.items = action.payload;
     },
     failureGetToDo: () => {},
 
@@ -74,3 +77,13 @@ const toDoSlice = createSlice({
 
 export const todoActions = toDoSlice.actions;
 export const toDoReducer = toDoSlice.reducer;
+
+const selectToDos = (state: RootState) => state.toDo.items;
+const selectStatusFilter = (_: RootState, statusFilter: ToDoStatus) =>
+  statusFilter;
+export const selectFilteredToDos = createSelector(
+  selectToDos,
+  selectStatusFilter,
+  (items: ToDoItem[], statusFilter) =>
+    items.filter((item: ToDoItem) => item.status === statusFilter),
+);
