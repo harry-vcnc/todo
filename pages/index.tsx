@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { selectFilteredToDos, todoActions } from '@root/to-do/slice';
 import { RootState } from './store';
 import { ToDoItemType, ToDoStatus } from '@root/to-do/types';
-import { useEffect, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import ToDoForm from '@root/to-do/components/ToDoForm';
 import ToDoItem from '@root/to-do/components/ToDoItem';
 
@@ -20,6 +20,9 @@ export default function Home() {
     selectFilteredToDos(state, statusFilter),
   );
 
+  const handleStatusFilterSelect = (event: ChangeEvent<HTMLSelectElement>) =>
+    setStatusFilter(event.target.value as ToDoStatus);
+
   useEffect(() => {
     dispatch(todoActions.requestGetToDo());
   }, [dispatch]);
@@ -34,11 +37,7 @@ export default function Home() {
       <main className={styles.main}>
         <h1 className={styles.title}>To-Do List</h1>
         <ToDoForm />
-        <select
-          onChange={(event) =>
-            setStatusFilter(event.target.value as ToDoStatus)
-          }
-        >
+        <select onChange={handleStatusFilterSelect}>
           <option value="OPEN">OPEN</option>
           <option value="IN_PROGRESS">IN_PROGRESS</option>
           <option value="DONE">DONE</option>
