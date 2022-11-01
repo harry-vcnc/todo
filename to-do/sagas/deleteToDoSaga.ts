@@ -14,7 +14,7 @@ export function* deleteToDoSaga(action: RequestDeleteToDoAction) {
     return;
   }
 
-  yield* put(todoActions.successDeleteToDo(result.payload));
+  yield* put(todoActions.successDeleteToDo());
 }
 
 export const deleteToDoWatcher = takeLeading(

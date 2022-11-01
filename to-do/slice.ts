@@ -28,18 +28,16 @@ const toDoSlice = createSlice({
     },
     failureGetToDoApi: () => {},
     requestGetToDo: () => {},
-    successGetToDo: (state, action: PayloadAction<ToDoItemType[]>) => {
-      // state.items = action.payload;
-    },
+    successGetToDo: () => {},
     failureGetToDo: () => {},
 
     requestAddToDoApi: (state, action: RequestAddToDoAction) => {},
-    successAddToDoApi: (state, action: PayloadAction<ToDoItemType>) => {},
-    failureAddToDoApi: () => {},
-    requestAddToDo: (state, action: RequestAddToDoAction) => {},
-    successAddToDo: (state, action: PayloadAction<ToDoItemType>) => {
+    successAddToDoApi: (state, action: PayloadAction<ToDoItemType>) => {
       state.items.push(action.payload);
     },
+    failureAddToDoApi: () => {},
+    requestAddToDo: (state, action: RequestAddToDoAction) => {},
+    successAddToDo: () => {},
     failureAddToDo: () => {},
 
     requestUpdateToDoStatusApi: (
@@ -49,27 +47,24 @@ const toDoSlice = createSlice({
     successUpdateToDoStatusApi: (
       state,
       action: PayloadAction<ToDoItemType>,
-    ) => {},
-    failureUpdateToDoStatusApi: () => {},
-    requestUpdateToDoStatus: (state, action: PayloadAction<ToDoIdStatus>) => {},
-    successUpdateToDoStatus: (state, action: PayloadAction<ToDoItemType>) => {
+    ) => {
       const item = state.items.find((item) => item.id === action.payload.id);
       if (item) {
         item.status = action.payload.status;
       }
     },
+    failureUpdateToDoStatusApi: () => {},
+    requestUpdateToDoStatus: (state, action: PayloadAction<ToDoIdStatus>) => {},
+    successUpdateToDoStatus: () => {},
     failureUpdateToDoStatus: () => {},
 
     requestDeleteToDoApi: (state, action: RequestDeleteToDoAction) => {},
-    successDeleteToDoApi: (state, action: PayloadAction<ToDoItemType>) => {},
-    failureDeleteToDoApi: () => {},
-    requestDeleteToDo: (state, action: RequestDeleteToDoAction) => {},
-    successDeleteToDo: (state, action: PayloadAction<ToDoItemType[]>) => {
-      // const result = state.items.filter(
-      //   (item) => item.id !== action.payload.id,
-      // );
+    successDeleteToDoApi: (state, action: PayloadAction<ToDoItemType[]>) => {
       state.items = action.payload;
     },
+    failureDeleteToDoApi: () => {},
+    requestDeleteToDo: (state, action: RequestDeleteToDoAction) => {},
+    successDeleteToDo: () => {},
     failureDeleteToDo: () => {},
   },
 });

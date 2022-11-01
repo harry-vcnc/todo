@@ -12,8 +12,8 @@ export function* addToDoSaga(action: RequestAddToDoAction) {
 
   yield* fork(fetchAddToDo, action);
   const result = yield* take([
-    todoActions.successAddToDoApi,
-    todoActions.failureAddToDoApi,
+    todoActions.successAddToDoApi.type,
+    todoActions.failureAddToDoApi.type,
   ]);
 
   if (result.type === todoActions.failureAddToDoApi.type) {
@@ -22,7 +22,7 @@ export function* addToDoSaga(action: RequestAddToDoAction) {
     return;
   }
 
-  yield* put(todoActions.successAddToDo(result.payload));
+  yield* put(todoActions.successAddToDo());
 }
 
 export const addToDoWatcher = takeLeading(

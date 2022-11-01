@@ -1,9 +1,10 @@
+import { PayloadAction } from '@reduxjs/toolkit';
 import { TODO_API_URL } from '@root/constants/urls';
 import {
   RequestAddToDoAction,
   RequestDeleteToDoAction,
-  RequestUpdateToDoStatusAction,
   todoActions,
+  ToDoIdStatus,
 } from '@root/to-do/slice';
 import axios from 'axios';
 import { call, put } from 'typed-redux-saga';
@@ -42,7 +43,7 @@ export function* fetchGetToDoApi() {
   }
 }
 
-export function* fetchUpdateToDo(action: RequestUpdateToDoStatusAction) {
+export function* fetchUpdateToDo(action: PayloadAction<ToDoIdStatus>) {
   try {
     const response = yield* call(() =>
       axios.patch(`${TODO_API_URL}/${action.payload.id}/status`, {

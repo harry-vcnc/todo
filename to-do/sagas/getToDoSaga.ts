@@ -14,7 +14,7 @@ export function* getToDoSaga() {
     return;
   }
 
-  yield* put(todoActions.successGetToDo(result.payload));
+  yield* put(todoActions.successGetToDo());
 }
 
 export const getToDoWatcher = takeLeading(
