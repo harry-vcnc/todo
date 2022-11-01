@@ -1,6 +1,6 @@
 export type ToDoStatus = 'OPEN' | 'IN_PROGRESS' | 'DONE';
 
-export interface ToDoItem {
+export interface ToDoItemType {
   id: string;
   title: string;
   description: string;

@@ -3,9 +3,10 @@ import styles from '../styles/Home.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectFilteredToDos, todoActions } from '@root/to-do/slice';
 import { RootState } from './store';
-import { ToDoItem, ToDoStatus } from '@root/to-do/types';
+import { ToDoItemType, ToDoStatus } from '@root/to-do/types';
 import { useEffect, useState } from 'react';
 import ToDoForm from '@root/to-do/components/ToDoForm';
+import ToDoItem from '@root/to-do/components/ToDoItem';
 
 // selector -> 스토어 전체 변화를 바라보는 것을 최적화
 // createSelector() 의 selector 함수로 주어지는 스코프로 범위가 줄어든다
@@ -18,9 +19,6 @@ export default function Home() {
   const filteredToDos = useSelector((state: RootState) =>
     selectFilteredToDos(state, statusFilter),
   );
-
-  const dispatchUpdateStatus = (props: Pick<ToDoItem, 'id' | 'status'>) =>
-    dispatch(todoActions.requestUpdateToDoStatus(props));
 
   useEffect(() => {
     dispatch(todoActions.requestGetToDo());
@@ -45,42 +43,8 @@ export default function Home() {
           <option value="IN_PROGRESS">IN_PROGRESS</option>
           <option value="DONE">DONE</option>
         </select>
-        {filteredToDos.map((toDo: ToDoItem) => (
-          <div className={styles.card} key={toDo.id}>
-            <span>{toDo.title}</span>
-            <span>{toDo.description}</span>
-            <span>{toDo.status}</span>
-            <div>
-              <button
-                onClick={() =>
-                  dispatchUpdateStatus({ id: toDo.id, status: 'OPEN' })
-                }
-              >
-                Open
-              </button>
-              <button
-                onClick={() =>
-                  dispatchUpdateStatus({ id: toDo.id, status: 'IN_PROGRESS' })
-                }
-              >
-                In Progress
-              </button>
-              <button
-                onClick={() =>
-                  dispatchUpdateStatus({ id: toDo.id, status: 'DONE' })
-                }
-              >
-                Done
-              </button>{' '}
-              <button
-                onClick={() =>
-                  dispatch(todoActions.requestDeleteToDo({ id: toDo.id }))
-                }
-              >
-                X
-              </button>
-            </div>
-          </div>
+        {filteredToDos.map((toDo: ToDoItemType) => (
+          <ToDoItem {...toDo} key={toDo.id} />
         ))}
       </main>
     </div>
