@@ -15,8 +15,12 @@ function ToDoItem(props: ToDoItemType) {
   const dispatchUpdateDone = () =>
     dispatchUpdateStatus({ id: props.id, status: 'DONE' });
 
-  const dispatchDeleteToDo = () =>
-    dispatch(todoActions.requestDeleteToDo({ id: props.id }));
+  const handleClickDelete = () => {
+    const isDeleteConfirmed = window.confirm('삭제하시겠습니까?');
+    if (isDeleteConfirmed) {
+      dispatch(todoActions.requestDeleteToDo({ id: props.id }));
+    }
+  };
 
   return (
     <div className={styles.card} key={props.id}>
@@ -27,7 +31,7 @@ function ToDoItem(props: ToDoItemType) {
         <button onClick={dispatchUpdateOpen}>Open</button>
         <button onClick={dispatchUpdateInProgress}>In Progress</button>
         <button onClick={dispatchUpdateDone}>Done</button>{' '}
-        <button onClick={dispatchDeleteToDo}>X</button>
+        <button onClick={handleClickDelete}>X</button>
       </div>
     </div>
   );
