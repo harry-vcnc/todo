@@ -15,7 +15,7 @@ import ToDoItem from '@root/to-do/components/ToDoItem';
 
 export default function Home() {
   const dispatch = useDispatch();
-  const [statusFilter, setStatusFilter] = useState<ToDoStatus>('OPEN');
+  const [statusFilter, setStatusFilter] = useState<ToDoStatus>(ToDoStatus.OPEN);
   const filteredToDos = useSelector((state: RootState) =>
     selectFilteredToDos(state, statusFilter),
   );

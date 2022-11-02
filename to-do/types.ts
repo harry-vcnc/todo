@@ -1,4 +1,8 @@
-export type ToDoStatus = 'OPEN' | 'IN_PROGRESS' | 'DONE';
+export enum ToDoStatus {
+  OPEN = 'OPEN',
+  IN_PROGRESS = 'IN_PROGRESS',
+  DONE = 'DONE',
+}
 
 export interface ToDoItemType {
   id: string;

@@ -1,7 +1,7 @@
 import styles from '@root/styles/Home.module.css';
 import { useDispatch } from 'react-redux';
 import { todoActions, ToDoIdStatus } from '@root/to-do/slice';
-import { ToDoItemType } from '@root/to-do/types';
+import { ToDoItemType, ToDoStatus } from '@root/to-do/types';
 
 function ToDoItem(props: ToDoItemType) {
   const dispatch = useDispatch();
@@ -9,11 +9,11 @@ function ToDoItem(props: ToDoItemType) {
   const dispatchUpdateStatus = (param: ToDoIdStatus) =>
     dispatch(todoActions.requestUpdateToDoStatus(param));
   const dispatchUpdateOpen = () =>
-    dispatchUpdateStatus({ id: props.id, status: 'OPEN' });
+    dispatchUpdateStatus({ id: props.id, status: ToDoStatus.OPEN });
   const dispatchUpdateInProgress = () =>
-    dispatchUpdateStatus({ id: props.id, status: 'IN_PROGRESS' });
+    dispatchUpdateStatus({ id: props.id, status: ToDoStatus.IN_PROGRESS });
   const dispatchUpdateDone = () =>
-    dispatchUpdateStatus({ id: props.id, status: 'DONE' });
+    dispatchUpdateStatus({ id: props.id, status: ToDoStatus.DONE });
 
   const handleClickDelete = () => {
     const isDeleteConfirmed = window.confirm('삭제하시겠습니까?');
