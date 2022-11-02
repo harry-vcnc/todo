@@ -66,6 +66,7 @@ const toDoSlice = createSlice({
     requestDeleteToDo: (state, action: RequestDeleteToDoAction) => {},
     successDeleteToDo: () => {},
     failureDeleteToDo: () => {},
+    cancelDeleteToDo: () => {},
   },
 });
 
