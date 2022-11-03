@@ -7,5 +7,5 @@ export const toDoWatcher = [
   addToDoWatcher,
   getToDoWatcher,
   updateToDoStatusWatcher,
-  deleteToDoWatcher,
+  ...deleteToDoWatcher,
 ];
