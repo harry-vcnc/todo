@@ -4,7 +4,7 @@ import { RequestDeleteToDoActionType, todoActions } from '../slice';
 import { fetchDeleteToDo } from './apis';
 
 export function* deleteToDoSaga(action: RequestDeleteToDoActionType) {
-  yield* put(popUpActions.openPopUp());
+  yield* put(popUpActions.requestPopUp());
   const popUpResult = yield* take([
     popUpActions.onConfirm.type,
     popUpActions.onCancel.type,

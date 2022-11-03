@@ -12,7 +12,7 @@ const popUpSlice = createSlice({
   name: 'popUp',
   initialState,
   reducers: {
-    initPopUp: () => {},
+    requestPopUp: () => {},
     openPopUp: (state) => {
       state.isOpen = true;
     },

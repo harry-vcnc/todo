@@ -15,10 +15,6 @@ const PopUp = () => {
     return dispatch(popUpActions.onConfirm());
   };
 
-  useEffect(() => {
-    dispatch(popUpActions.initPopUp());
-  }, [dispatch]);
-
   return (
     <Portal isOpen={isOpen}>
       <PopUpDimmed>

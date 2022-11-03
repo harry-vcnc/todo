@@ -1,3 +1,3 @@
-import { initPopUpWatcher } from './initPopUpSaga';
+import { requestPopUpWatcher } from './requestPopUpSaga';
 
-export const popUpWatcher = [initPopUpWatcher];
+export const popUpWatcher = [requestPopUpWatcher];
