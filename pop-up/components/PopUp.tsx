@@ -6,7 +6,7 @@ import { useDispatch } from 'react-redux';
 
 const PopUp = () => {
   const dispatch = useDispatch();
-  const { isOpen } = useSelectPopUp();
+  const { isOpen, content } = useSelectPopUp();
 
   const onClickCancel = () => {
     return dispatch(popUpActions.onCancel());
@@ -19,7 +19,7 @@ const PopUp = () => {
     <Portal isOpen={isOpen}>
       <PopUpDimmed>
         <PopUpContainer>
-          <div>삭제하시겠습니까?</div>
+          <div>{content}</div>
           <ButtonContainer>
             <button onClick={onClickCancel}>Cancel</button>
             <button onClick={onClickConfirm}>OK</button>
