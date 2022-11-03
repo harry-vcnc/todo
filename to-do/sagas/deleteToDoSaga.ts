@@ -4,7 +4,7 @@ import { RequestDeleteToDoActionType, todoActions } from '../slice';
 import { fetchDeleteToDo } from './apis';
 
 export function* deleteToDoSaga(action: RequestDeleteToDoActionType) {
-  yield* put(popUpActions.requestPopUp());
+  yield* put(popUpActions.requestPopUp({ content: '삭제하시겠습니까?' }));
   const popUpResult = yield* take([
     popUpActions.onConfirm.type,
     popUpActions.onCancel.type,
@@ -29,21 +29,26 @@ export function* deleteToDoSaga(action: RequestDeleteToDoActionType) {
 }
 
 function* retryDeleteToDoSaga(action: RequestDeleteToDoActionType) {
-  const isRetryConfirmed = window.confirm(
-    '삭제에 실패했습니다. 다시 시도하겠습니까?',
+  yield* put(
+    popUpActions.requestPopUp({
+      content: '삭제에 실패했습니다. 다시 시도하겠습니까?',
+    }),
   );
-  if (!isRetryConfirmed) {
+  const popUpResult = yield* take([
+    popUpActions.onConfirm.type,
+    popUpActions.onCancel.type,
+  ]);
+  if (popUpResult.type === popUpActions.onCancel.type) {
     yield* put(todoActions.failureRetryDeleteToDo());
     return;
   }
 
   yield* fork(fetchDeleteToDo, action);
-  const result = yield* take([
+  const apiResult = yield* take([
     todoActions.successDeleteToDoApi.type,
     todoActions.failureDeleteToDoApi.type,
   ]);
-
-  if (result.type === todoActions.failureDeleteToDoApi.type) {
+  if (apiResult.type === todoActions.failureDeleteToDoApi.type) {
     yield* put(todoActions.requestRetryDeleteToDo(action.payload));
     return;
   }
