@@ -12,11 +12,12 @@ const initialState: ToDoState = {
 };
 
 type ToDoContent = Pick<ToDoItemType, 'title' | 'description'>;
-export type RequestAddToDoAction = PayloadAction<ToDoContent>;
-// export type RequestUpdateToDoStatusAction = PayloadAction<
 export type ToDoIdStatus = Pick<ToDoItemType, 'id' | 'status'>;
-// export type PayloadActionType = PayloadAction<ToDoIdStatus>;
-export type RequestDeleteToDoAction = PayloadAction<Pick<ToDoItemType, 'id'>>;
+export type RequestAddToDoActionType = PayloadAction<ToDoContent>;
+export type RequestDeleteToDoActionType = PayloadAction<
+  Pick<ToDoItemType, 'id'>
+>;
+export type RequestUpdateToDoActionType = PayloadAction<ToDoIdStatus>;
 
 const toDoSlice = createSlice({
   name: 'toDos',
@@ -31,18 +32,18 @@ const toDoSlice = createSlice({
     successGetToDo: () => {},
     failureGetToDo: () => {},
 
-    requestAddToDoApi: (state, action: RequestAddToDoAction) => {},
+    requestAddToDoApi: (state, action: RequestAddToDoActionType) => {},
     successAddToDoApi: (state, action: PayloadAction<ToDoItemType>) => {
       state.items.push(action.payload);
     },
     failureAddToDoApi: () => {},
-    requestAddToDo: (state, action: RequestAddToDoAction) => {},
+    requestAddToDo: (state, action: RequestAddToDoActionType) => {},
     successAddToDo: () => {},
     failureAddToDo: () => {},
 
     requestUpdateToDoStatusApi: (
       state,
-      action: PayloadAction<ToDoIdStatus>,
+      action: RequestUpdateToDoActionType,
     ) => {},
     successUpdateToDoStatusApi: (
       state,
@@ -54,20 +55,20 @@ const toDoSlice = createSlice({
       }
     },
     failureUpdateToDoStatusApi: () => {},
-    requestUpdateToDoStatus: (state, action: PayloadAction<ToDoIdStatus>) => {},
+    requestUpdateToDoStatus: (state, action: RequestUpdateToDoActionType) => {},
     successUpdateToDoStatus: () => {},
     failureUpdateToDoStatus: () => {},
 
-    requestDeleteToDoApi: (state, action: RequestDeleteToDoAction) => {},
+    requestDeleteToDoApi: (state, action: RequestDeleteToDoActionType) => {},
     successDeleteToDoApi: (state, action: PayloadAction<ToDoItemType[]>) => {
       state.items = action.payload;
     },
     failureDeleteToDoApi: () => {},
-    requestDeleteToDo: (state, action: RequestDeleteToDoAction) => {},
+    requestDeleteToDo: (state, action: RequestDeleteToDoActionType) => {},
     successDeleteToDo: () => {},
     failureDeleteToDo: () => {},
 
-    requestRetryDeleteToDo: (state, action: RequestDeleteToDoAction) => {},
+    requestRetryDeleteToDo: (state, action: RequestDeleteToDoActionType) => {},
     successRetryDeleteToDo: () => {},
     failureRetryDeleteToDo: () => {},
   },

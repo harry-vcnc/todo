@@ -1,8 +1,8 @@
-import { RequestAddToDoAction, todoActions } from '@root/to-do/slice';
+import { RequestAddToDoActionType, todoActions } from '@root/to-do/slice';
 import { fork, put, take, takeLeading } from 'typed-redux-saga';
 import { fetchAddToDo } from './apis';
 
-export function* addToDoSaga(action: RequestAddToDoAction) {
+export function* addToDoSaga(action: RequestAddToDoActionType) {
   // 큰 타입 action으로 넘겨주면, 이 사가에서 호출되는
   // 제너레이터 혹은 사가 내부에 사용한다
 

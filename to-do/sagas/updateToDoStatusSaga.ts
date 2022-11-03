@@ -1,9 +1,13 @@
 import { PayloadAction } from '@reduxjs/toolkit';
 import { fork, put, take, takeLeading } from 'typed-redux-saga';
-import { todoActions, ToDoIdStatus } from '../slice';
+import {
+  RequestUpdateToDoActionType,
+  todoActions,
+  ToDoIdStatus,
+} from '../slice';
 import { fetchUpdateToDo } from './apis';
 
-export function* updateToDoStatusSaga(action: PayloadAction<ToDoIdStatus>) {
+export function* updateToDoStatusSaga(action: RequestUpdateToDoActionType) {
   yield* fork(fetchUpdateToDo, action);
   const result = yield* take([
     todoActions.successUpdateToDoStatusApi.type,
