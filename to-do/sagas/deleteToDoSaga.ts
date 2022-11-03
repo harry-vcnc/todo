@@ -1,21 +1,25 @@
+import { popUpActions } from '@root/pop-up/slice';
 import { fork, put, take, takeLatest, takeLeading } from 'typed-redux-saga';
 import { RequestDeleteToDoActionType, todoActions } from '../slice';
 import { fetchDeleteToDo } from './apis';
 
 export function* deleteToDoSaga(action: RequestDeleteToDoActionType) {
-  const isDeleteConfirmed = window.confirm('삭제하시겠습니까?');
-  if (!isDeleteConfirmed) {
+  yield* put(popUpActions.openPopUp());
+  const popUpResult = yield* take([
+    popUpActions.onConfirm.type,
+    popUpActions.onCancel.type,
+  ]);
+  if (popUpResult.type === popUpActions.onCancel.type) {
     yield* put(todoActions.failureDeleteToDo());
     return;
   }
 
   yield* fork(fetchDeleteToDo, action);
-  const result = yield* take([
+  const apiResult = yield* take([
     todoActions.successDeleteToDoApi.type,
     todoActions.failureDeleteToDoApi.type,
   ]);
-
-  if (result.type === todoActions.failureDeleteToDoApi.type) {
+  if (apiResult.type === todoActions.failureDeleteToDoApi.type) {
     yield* put(todoActions.failureDeleteToDo());
     yield* put(todoActions.requestRetryDeleteToDo(action.payload));
     return;
