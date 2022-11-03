@@ -6,8 +6,8 @@ import { fetchUpdateToDo } from './apis';
 export function* updateToDoStatusSaga(action: PayloadAction<ToDoIdStatus>) {
   yield* fork(fetchUpdateToDo, action);
   const result = yield* take([
-    todoActions.successUpdateToDoStatusApi,
-    todoActions.failureUpdateToDoStatusApi,
+    todoActions.successUpdateToDoStatusApi.type,
+    todoActions.failureUpdateToDoStatusApi.type,
   ]);
 
   if (result.type === todoActions.failureUpdateToDoStatusApi.type) {

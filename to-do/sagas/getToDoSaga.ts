@@ -5,11 +5,11 @@ import { fetchGetToDoApi } from './apis';
 export function* getToDoSaga() {
   yield* fork(fetchGetToDoApi);
   const result = yield* take([
-    todoActions.successGetToDoApi,
-    todoActions.failureGetToDoApi,
+    todoActions.successGetToDoApi.type,
+    todoActions.failureGetToDoApi.type,
   ]);
 
-  if (result === todoActions.failureGetToDoApi.type) {
+  if (result.type === todoActions.failureGetToDoApi.type) {
     yield* put(todoActions.failureGetToDo());
     return;
   }

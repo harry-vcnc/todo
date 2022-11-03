@@ -11,8 +11,8 @@ export function* deleteToDoSaga(action: RequestDeleteToDoAction) {
 
   yield* fork(fetchDeleteToDo, action);
   const result = yield* take([
-    todoActions.successDeleteToDoApi,
-    todoActions.failureDeleteToDoApi,
+    todoActions.successDeleteToDoApi.type,
+    todoActions.failureDeleteToDoApi.type,
   ]);
 
   if (result.type === todoActions.failureDeleteToDoApi.type) {
@@ -35,8 +35,8 @@ function* retryDeleteToDoSaga(action: RequestDeleteToDoAction) {
 
   yield* fork(fetchDeleteToDo, action);
   const result = yield* take([
-    todoActions.successDeleteToDoApi,
-    todoActions.failureDeleteToDoApi,
+    todoActions.successDeleteToDoApi.type,
+    todoActions.failureDeleteToDoApi.type,
   ]);
 
   if (result.type === todoActions.failureDeleteToDoApi.type) {
