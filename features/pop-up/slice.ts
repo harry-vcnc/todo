@@ -23,6 +23,9 @@ const popUpSlice = createSlice({
       state.content = action.payload.content;
       state.isOpen = true;
     },
+    closePopUp: (state) => {
+      state.isOpen = false;
+    },
     cancelPopUp: (state) => {
       state.isOpen = false;
     },
@@ -33,6 +36,4 @@ const popUpSlice = createSlice({
 export const popUpActions = popUpSlice.actions;
 export const popUpReducer = popUpSlice.reducer;
 
-export const useSelectPopUp = () => {
-  return useSelector((state: RootState) => state.popUp);
-};
+export const selectPopUp = (state: RootState) => state.popUp;

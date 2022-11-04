@@ -1,11 +1,11 @@
 import Portal from '@root/common/components/Portal';
-import { popUpActions, useSelectPopUp } from '../slice';
+import { popUpActions, selectPopUp } from '../slice';
 import styled from '@emotion/styled';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 const PopUp = () => {
   const dispatch = useDispatch();
-  const { isOpen, content } = useSelectPopUp();
+  const { isOpen, content } = useSelector(selectPopUp);
 
   const onClickCancel = () => {
     dispatch(popUpActions.cancelPopUp());

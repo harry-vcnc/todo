@@ -1,5 +1,5 @@
 import { popUpActions } from '@root/features/pop-up/slice';
-import { fork, put, take, takeLatest, takeLeading } from 'typed-redux-saga';
+import { fork, put, take, takeEvery, takeLeading } from 'typed-redux-saga';
 import { RequestDeleteToDoActionType, todoActions } from '../slice';
 import { fetchDeleteToDo } from './apis';
 
@@ -49,14 +49,17 @@ function* retryDeleteToDoSaga(action: RequestDeleteToDoActionType) {
     todoActions.failureDeleteToDoApi.type,
   ]);
   if (apiResult.type === todoActions.failureDeleteToDoApi.type) {
+    yield* put(popUpActions.closePopUp());
     yield* put(todoActions.requestRetryDeleteToDo(action.payload));
     return;
   }
-
   yield* put(todoActions.successRetryDeleteToDo());
 }
 
 export const deleteToDoWatcher = [
   takeLeading(todoActions.requestDeleteToDo.type, deleteToDoSaga),
-  takeLatest(todoActions.requestRetryDeleteToDo.type, retryDeleteToDoSaga),
+  // if)) request가 takeLeading이 아니라 takeEvery였다면
+  // retry가 takeLatest 따위면 무시되는 액션이 발생하므로
+  // takeEvery가 옳다
+  takeEvery(todoActions.requestRetryDeleteToDo.type, retryDeleteToDoSaga),
 ];
