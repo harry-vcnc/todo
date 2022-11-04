@@ -8,6 +8,7 @@ interface PopUpState {
 }
 
 type RequestPopUpActionType = PayloadAction<Pick<PopUpState, 'content'>>;
+type OpentPopUpActionType = PayloadAction<Pick<PopUpState, 'content'>>;
 
 const initialState: PopUpState = { isOpen: false, content: '' };
 
@@ -15,17 +16,17 @@ const popUpSlice = createSlice({
   name: 'popUp',
   initialState,
   reducers: {
-    requestPopUp: (state, action: RequestPopUpActionType) => {
+    setPopUpContent: (state, action: RequestPopUpActionType) => {
       state.content = action.payload.content;
     },
-    openPopUp: (state) => {
+    openPopUp: (state, action: OpentPopUpActionType) => {
+      state.content = action.payload.content;
       state.isOpen = true;
     },
-    closePopUp: (state) => {
+    cancelPopUp: (state) => {
       state.isOpen = false;
     },
-    onConfirm: () => {},
-    onCancel: () => {},
+    confirmPopUp: () => {},
   },
 });
 

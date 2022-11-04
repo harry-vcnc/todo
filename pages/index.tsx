@@ -1,12 +1,12 @@
 import Head from 'next/head';
 import styles from '../styles/Home.module.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectFilteredToDos, todoActions } from '@root/to-do/slice';
+import { selectFilteredToDos, todoActions } from '@root/features/to-do/slice';
 import { RootState } from './store';
-import { ToDoItemType, ToDoStatus } from '@root/to-do/types';
+import { ToDoItemType, ToDoStatus } from '@root/features/to-do/types';
 import { ChangeEvent, useEffect, useState } from 'react';
-import ToDoForm from '@root/to-do/components/ToDoForm';
-import ToDoItem from '@root/to-do/components/ToDoItem';
+import ToDoForm from '@root/features/to-do/components/ToDoForm';
+import ToDoItem from '@root/features/to-do/components/ToDoItem';
 
 // selector -> 스토어 전체 변화를 바라보는 것을 최적화
 // createSelector() 의 selector 함수로 주어지는 스코프로 범위가 줄어든다

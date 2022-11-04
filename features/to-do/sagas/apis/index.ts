@@ -6,7 +6,7 @@ import {
   RequestUpdateToDoActionType,
   todoActions,
   ToDoIdStatus,
-} from '@root/to-do/slice';
+} from '@root/features/to-do/slice';
 import axios from 'axios';
 import { call, put } from 'typed-redux-saga';
 

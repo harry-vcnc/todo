@@ -1,7 +1,7 @@
 import styles from '@root/styles/Home.module.css';
 import { useDispatch } from 'react-redux';
-import { todoActions, ToDoIdStatus } from '@root/to-do/slice';
-import { ToDoItemType, ToDoStatus } from '@root/to-do/types';
+import { todoActions, ToDoIdStatus } from '@root/features/to-do/slice';
+import { ToDoItemType, ToDoStatus } from '@root/features/to-do/types';
 
 function ToDoItem(props: ToDoItemType) {
   const dispatch = useDispatch();

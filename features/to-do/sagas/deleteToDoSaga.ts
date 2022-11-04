@@ -4,12 +4,12 @@ import { RequestDeleteToDoActionType, todoActions } from '../slice';
 import { fetchDeleteToDo } from './apis';
 
 export function* deleteToDoSaga(action: RequestDeleteToDoActionType) {
-  yield* put(popUpActions.requestPopUp({ content: '삭제하시겠습니까?' }));
+  yield* put(popUpActions.openPopUp({ content: '삭제하시겠습니까?' }));
   const popUpResult = yield* take([
-    popUpActions.onConfirm.type,
-    popUpActions.onCancel.type,
+    popUpActions.confirmPopUp.type,
+    popUpActions.cancelPopUp.type,
   ]);
-  if (popUpResult.type === popUpActions.onCancel.type) {
+  if (popUpResult.type === popUpActions.cancelPopUp.type) {
     yield* put(todoActions.failureDeleteToDo());
     return;
   }
@@ -30,15 +30,15 @@ export function* deleteToDoSaga(action: RequestDeleteToDoActionType) {
 
 function* retryDeleteToDoSaga(action: RequestDeleteToDoActionType) {
   yield* put(
-    popUpActions.requestPopUp({
+    popUpActions.openPopUp({
       content: '삭제에 실패했습니다. 다시 시도하겠습니까?',
     }),
   );
   const popUpResult = yield* take([
-    popUpActions.onConfirm.type,
-    popUpActions.onCancel.type,
+    popUpActions.confirmPopUp.type,
+    popUpActions.cancelPopUp.type,
   ]);
-  if (popUpResult.type === popUpActions.onCancel.type) {
+  if (popUpResult.type === popUpActions.cancelPopUp.type) {
     yield* put(todoActions.failureRetryDeleteToDo());
     return;
   }

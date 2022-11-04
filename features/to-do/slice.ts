@@ -1,6 +1,6 @@
 import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '@root/pages/store';
-import { ToDoItemType, ToDoStatus } from '@root/to-do/types';
+import { ToDoItemType, ToDoStatus } from '@root/features/to-do/types';
 import { useSelector } from 'react-redux';
 
 interface ToDoState {

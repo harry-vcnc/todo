@@ -1,4 +1,7 @@
-import { RequestAddToDoActionType, todoActions } from '@root/to-do/slice';
+import {
+  RequestAddToDoActionType,
+  todoActions,
+} from '@root/features/to-do/slice';
 import { fork, put, take, takeLeading } from 'typed-redux-saga';
 import { fetchAddToDo } from './apis';
 
