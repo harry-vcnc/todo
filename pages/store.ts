@@ -2,7 +2,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import createSagaMiddleware from 'redux-saga';
 import { rootSaga } from '../sagas/rootSaga';
 import { toDoReducer } from '@root/to-do/slice';
-import { popUpReducer } from '@root/pop-up/slice';
+import { popUpReducer } from '@root/features/pop-up/slice';
 
 const sagaMiddleware = createSagaMiddleware();
 export const store = configureStore({

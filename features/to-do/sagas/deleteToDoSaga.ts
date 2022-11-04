@@ -1,4 +1,4 @@
-import { popUpActions } from '@root/pop-up/slice';
+import { popUpActions } from '@root/features/pop-up/slice';
 import { fork, put, take, takeLatest, takeLeading } from 'typed-redux-saga';
 import { RequestDeleteToDoActionType, todoActions } from '../slice';
 import { fetchDeleteToDo } from './apis';

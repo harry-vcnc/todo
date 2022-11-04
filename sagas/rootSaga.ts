@@ -1,5 +1,5 @@
-import { popUpWatcher } from '@root/pop-up/sagas/watcher';
-import { toDoWatcher } from '@root/to-do/sagas/watcher';
+import { popUpWatcher } from '@root/features/pop-up/sagas/watcher';
+import { toDoWatcher } from '@root/features/to-do/sagas/watcher';
 import { all } from 'typed-redux-saga';
 
 export function* rootSaga() {
